@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
-  productGUID: c2572806eb2e4154f9e5493f31972185
+  productGUID: 00d3a1914aff9854bae4dadfa73c9a24
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Survival_Final_Project
+  productName: SurvivalAcademy_01
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -42,12 +42,12 @@ PlayerSettings:
   m_SplashScreenLogos: []
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
-  defaultScreenWidth: 1920
-  defaultScreenHeight: 1080
+  defaultScreenWidth: 1024
+  defaultScreenHeight: 768
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
-  m_ActiveColorSpace: 1
+  m_ActiveColorSpace: 0
   unsupportedMSAAFallback: 0
   m_SpriteBatchVertexThreshold: 300
   m_MTRendering: 1
@@ -134,7 +134,7 @@ PlayerSettings:
   stadiaTargetFramerate: 0
   vulkanNumSwapchainBuffers: 3
   vulkanEnableSetSRGBWrite: 0
-  vulkanEnablePreTransform: 1
+  vulkanEnablePreTransform: 0
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
@@ -251,7 +251,7 @@ PlayerSettings:
   appleEnableProMotion: 0
   shaderPrecisionModel: 0
   clonedFromGUID: c0afd0d1d80e3634a9dac47e8a0426ea
-  templatePackageId: com.unity.template.3d@8.1.3
+  templatePackageId: com.unity.template.3d@5.0.3
   templateDefaultScene: Assets/Scenes/SampleScene.unity
   useCustomMainManifest: 0
   useCustomLauncherManifest: 0
@@ -287,6 +287,98 @@ PlayerSettings:
   AndroidAppBundleSizeToValidate: 150
   m_BuildTargetIcons: []
   m_BuildTargetPlatformIcons:
+  - m_BuildTarget: Android
+    m_Icons:
+    - m_Textures: []
+      m_Width: 432
+      m_Height: 432
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 324
+      m_Height: 324
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 216
+      m_Height: 216
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 162
+      m_Height: 162
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 108
+      m_Height: 108
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 81
+      m_Height: 81
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 192
+      m_Height: 192
+      m_Kind: 1
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 144
+      m_Height: 144
+      m_Kind: 1
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 96
+      m_Height: 96
+      m_Kind: 1
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 72
+      m_Height: 72
+      m_Kind: 1
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 48
+      m_Height: 48
+      m_Kind: 1
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 36
+      m_Height: 36
+      m_Kind: 1
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 192
+      m_Height: 192
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 144
+      m_Height: 144
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 96
+      m_Height: 96
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 72
+      m_Height: 72
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 48
+      m_Height: 48
+      m_Kind: 0
+      m_SubKind: 
+    - m_Textures: []
+      m_Width: 36
+      m_Height: 36
+      m_Kind: 0
+      m_SubKind: 
   - m_BuildTarget: iPhone
     m_Icons:
     - m_Textures: []
@@ -384,98 +476,6 @@ PlayerSettings:
       m_Height: 1024
       m_Kind: 4
       m_SubKind: App Store
-  - m_BuildTarget: Android
-    m_Icons:
-    - m_Textures: []
-      m_Width: 432
-      m_Height: 432
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 324
-      m_Height: 324
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 216
-      m_Height: 216
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 162
-      m_Height: 162
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 108
-      m_Height: 108
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 81
-      m_Height: 81
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 192
-      m_Height: 192
-      m_Kind: 1
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 144
-      m_Height: 144
-      m_Kind: 1
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 96
-      m_Height: 96
-      m_Kind: 1
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 72
-      m_Height: 72
-      m_Kind: 1
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 48
-      m_Height: 48
-      m_Kind: 1
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 36
-      m_Height: 36
-      m_Kind: 1
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 192
-      m_Height: 192
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 144
-      m_Height: 144
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 96
-      m_Height: 96
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 72
-      m_Height: 72
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 48
-      m_Height: 48
-      m_Kind: 0
-      m_SubKind: 
-    - m_Textures: []
-      m_Width: 36
-      m_Height: 36
-      m_Kind: 0
-      m_SubKind: 
   m_BuildTargetBatching:
   - m_BuildTarget: Standalone
     m_StaticBatching: 1
@@ -554,32 +554,12 @@ PlayerSettings:
     Android: 1
     iPhone: 1
     tvOS: 1
-  m_BuildTargetGroupLightmapEncodingQuality:
-  - m_BuildTarget: Android
-    m_EncodingQuality: 1
-  - m_BuildTarget: iPhone
-    m_EncodingQuality: 1
-  - m_BuildTarget: tvOS
-    m_EncodingQuality: 1
-  m_BuildTargetGroupHDRCubemapEncodingQuality:
-  - m_BuildTarget: Android
-    m_EncodingQuality: 1
-  - m_BuildTarget: iPhone
-    m_EncodingQuality: 1
-  - m_BuildTarget: tvOS
-    m_EncodingQuality: 1
+  m_BuildTargetGroupLightmapEncodingQuality: []
+  m_BuildTargetGroupHDRCubemapEncodingQuality: []
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
-  m_BuildTargetNormalMapEncoding:
-  - m_BuildTarget: Android
-    m_Encoding: 1
-  - m_BuildTarget: iPhone
-    m_Encoding: 1
-  - m_BuildTarget: tvOS
-    m_Encoding: 1
-  m_BuildTargetDefaultTextureCompressionFormat:
-  - m_BuildTarget: Android
-    m_Format: 3
+  m_BuildTargetNormalMapEncoding: []
+  m_BuildTargetDefaultTextureCompressionFormat: []
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -729,7 +709,7 @@ PlayerSettings:
   switchSocketInitializeEnabled: 1
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchDisableHTCSPlayerConnection: 0
-  switchUseNewStyleFilepaths: 1
+  switchUseNewStyleFilepaths: 0
   switchUseLegacyFmodPriorities: 0
   switchUseMicroSleepForYield: 1
   switchEnableRamDiskSupport: 0
@@ -870,14 +850,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Survival_Final_Project
+  metroPackageName: Template_3D
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Survival_Final_Project
+  metroApplicationDescription: Template_3D
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -945,13 +925,13 @@ PlayerSettings:
   hmiLogStartupTiming: 0
   hmiCpuConfiguration: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 0
+  activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: e97dd9f1-ebd1-4efd-9b05-be3bcf3130eb
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Survival_Final_Project
-  organizationId: sherlock-3280091
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
