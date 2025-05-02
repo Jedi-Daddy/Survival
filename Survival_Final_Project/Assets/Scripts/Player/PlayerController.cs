@@ -20,15 +20,21 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 mouseDelta;
 
+    [HideInInspector]
+    public bool canLook = true;
+
+  
     private Rigidbody rig;
 
     void Awake ()
     {
+     
         rig = GetComponent<Rigidbody>();
     }
 
     void Start ()
     {
+        
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -39,50 +45,63 @@ public class PlayerController : MonoBehaviour
 
     void LateUpdate ()
     {
-        CameraLook();
+        if(canLook == true)
+            CameraLook();
     }
 
     void Move ()
     {
+      
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir *= moveSpeed;
         dir.y = rig.velocity.y;
 
+       
         rig.velocity = dir;
     }
 
     void CameraLook ()
     {
+        
         camCurXRot += mouseDelta.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
+        
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 
+    
     public void OnLookInput (InputAction.CallbackContext context)
     {
         mouseDelta = context.ReadValue<Vector2>();
     }
 
+    
     public void OnMoveInput (InputAction.CallbackContext context)
     {
+        
         if(context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
         }
+        
         else if(context.phase == InputActionPhase.Canceled)
         {
             curMovementInput = Vector2.zero;
         }
     }
 
+   
     public void OnJumpInput (InputAction.CallbackContext context)
     {
+        
         if(context.phase == InputActionPhase.Started)
         {
+            
             if(IsGrounded())
             {
+                
                 rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
         }
@@ -117,5 +136,11 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(transform.position + (-transform.forward * 0.2f), Vector3.down);
         Gizmos.DrawRay(transform.position + (transform.right * 0.2f), Vector3.down);
         Gizmos.DrawRay(transform.position + (-transform.right * 0.2f), Vector3.down);
+    }
+
+    public void ToggleCursor (bool toggle)
+    {
+        Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
+        canLook = !toggle;
     }
 }

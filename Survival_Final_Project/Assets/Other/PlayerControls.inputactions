@@ -11,8 +11,7 @@
                     "id": "dc27f06b-1eed-4413-95fa-c17a6d997500",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": ""
                 },
                 {
                     "name": "Attack",
@@ -20,8 +19,7 @@
                     "id": "70764eb9-7ba0-415a-9b85-e25dfc49eb42",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "AltAttack",
@@ -29,8 +27,7 @@
                     "id": "11adee2d-3b03-4fd4-bec4-1130dd7681ca",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "Jump",
@@ -38,8 +35,7 @@
                     "id": "c351af1e-07ad-4da1-9d62-4b39c45ac992",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "Inventory",
@@ -47,8 +43,7 @@
                     "id": "3dc48cab-f529-4aeb-95f1-8d85f7f1d1b3",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "Interact",
@@ -56,8 +51,7 @@
                     "id": "c9c2e22a-e4eb-4d2b-af2a-6f840878cd6e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "PauseMenu",
@@ -65,8 +59,7 @@
                     "id": "16b92718-4cbf-4d48-a714-cc44263f1be2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": ""
                 },
                 {
                     "name": "Look",
@@ -74,8 +67,7 @@
                     "id": "dd274b45-cde5-489e-83bf-8e39642b8d82",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
+                    "interactions": ""
                 }
             ],
             "bindings": [
