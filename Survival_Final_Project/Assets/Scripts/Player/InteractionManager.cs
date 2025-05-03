@@ -24,19 +24,15 @@ public class InteractionManager : MonoBehaviour
 
     void Update()
     {
-
         if(Time.time - lastCheckTime > checkRate)
         {
             lastCheckTime = Time.time;
 
-
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             RaycastHit hit;
 
-
             if(Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
             {
-
                 if(hit.collider.gameObject != curInteractGameObject)
                 {
                     curInteractGameObject = hit.collider.gameObject;
@@ -53,17 +49,14 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-
     void SetPromptText ()
     {
         promptText.gameObject.SetActive(true);
         promptText.text = string.Format("<b>[E]</b> {0}", curInteractable.GetInteractPrompt());
     }
 
-
     public void OnInteractInput (InputAction.CallbackContext context)
     {
-
         if(context.phase == InputActionPhase.Started && curInteractable != null)
         {
             curInteractable.OnInteract();

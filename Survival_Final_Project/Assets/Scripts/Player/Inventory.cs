@@ -28,14 +28,12 @@ public class Inventory : MonoBehaviour
 
     private int curEquipIndex;
 
-
     private PlayerController controller;
     private PlayerNeeds needs;
 
     [Header("Events")]
     public UnityEvent onOpenInventory;
     public UnityEvent onCloseInventory;
-
 
     public static Inventory instance;
 
@@ -51,7 +49,6 @@ public class Inventory : MonoBehaviour
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[uiSlots.Length];
 
-
         for(int x = 0; x < slots.Length; x++)
         {
             slots[x] = new ItemSlot();
@@ -62,7 +59,6 @@ public class Inventory : MonoBehaviour
         ClearSelectedItemWindow();
     }
 
-
     public void OnInventoryButton (InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Started)
@@ -70,7 +66,6 @@ public class Inventory : MonoBehaviour
             Toggle();
         }
     }
-
 
     public void Toggle ()
     {
@@ -89,16 +84,13 @@ public class Inventory : MonoBehaviour
         }    
     }
 
- 
     public bool IsOpen ()
     {
         return inventoryWindow.activeInHierarchy;
     }
 
- 
     public void AddItem (ItemData item)
     {
-
         if(item.canStack)
         {
             ItemSlot slotToStackTo = GetItemStack(item);
@@ -113,7 +105,6 @@ public class Inventory : MonoBehaviour
 
         ItemSlot emptySlot = GetEmptySlot();
 
-
         if(emptySlot != null)
         {
             emptySlot.item = item;
@@ -122,16 +113,13 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-
         ThrowItem(item);
     }
-
 
     void ThrowItem (ItemData item)
     {
         Instantiate(item.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360.0f));
     }
-
 
     void UpdateUI ()
     {
@@ -144,7 +132,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-
     ItemSlot GetItemStack (ItemData item)
     {
         for(int x = 0; x < slots.Length; x++)
@@ -155,7 +142,6 @@ public class Inventory : MonoBehaviour
 
         return null;
     }
-
 
     ItemSlot GetEmptySlot ()
     {
@@ -168,20 +154,16 @@ public class Inventory : MonoBehaviour
         return null;
     }
 
-
     public void SelectItem (int index)
     {
-
         if(slots[index].item == null)
             return;
-
 
         selectedItem = slots[index];
         selectedItemIndex = index;
 
         selectedItemName.text = selectedItem.item.displayName;
         selectedItemDescription.text = selectedItem.item.description;
-
 
         selectedItemStatNames.text = string.Empty;
         selectedItemStatValues.text = string.Empty;
@@ -198,10 +180,8 @@ public class Inventory : MonoBehaviour
         dropButton.SetActive(true);
     }
 
-
     void ClearSelectedItemWindow ()
     {
-
         selectedItem = null;
         selectedItemName.text = string.Empty;
         selectedItemDescription.text = string.Empty;
@@ -214,13 +194,10 @@ public class Inventory : MonoBehaviour
         dropButton.SetActive(false);
     }
 
-
     public void OnUseButton ()
     {
-
         if(selectedItem.item.type == ItemType.Consumable)
         {
-
             for(int x = 0; x < selectedItem.item.consumables.Length; x++)
             {
                 switch(selectedItem.item.consumables[x].type)
@@ -236,37 +213,44 @@ public class Inventory : MonoBehaviour
         RemoveSelectedItem();
     }
 
-
     public void OnEquipButton ()
     {
+        if(uiSlots[curEquipIndex].equipped)
+            UnEquip(curEquipIndex);
 
+        uiSlots[selectedItemIndex].equipped = true;
+        curEquipIndex = selectedItemIndex;
+        EquipManager.instance.EquipNew(selectedItem.item);
+        UpdateUI();
+
+        SelectItem(selectedItemIndex);
     }
-
 
     void UnEquip (int index)
     {
+        uiSlots[index].equipped = false;
+        EquipManager.instance.UnEquip();
+        UpdateUI();
 
+        if(selectedItemIndex == index)
+            SelectItem(index);
     }    
 
- 
     public void OnUnEquipButton ()
     {
-
+        UnEquip(selectedItemIndex);
     }
 
- 
     public void OnDropButton ()
     {
         ThrowItem(selectedItem.item);
         RemoveSelectedItem();
     }
 
-
     void RemoveSelectedItem ()
     {
         selectedItem.quantity--;
 
-  
         if(selectedItem.quantity == 0)
         {
             if(uiSlots[selectedItemIndex].equipped == true)
@@ -281,12 +265,40 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem (ItemData item)
     {
+        for(int i = 0; i < slots.Length; i++)
+        {
+            if(slots[i].item == item)
+            {
+                slots[i].quantity--;
 
+                if(slots[i].quantity == 0)
+                {
+                    if(uiSlots[i].equipped == true)
+                        UnEquip(i);
+
+                    slots[i].item = null;
+                    ClearSelectedItemWindow();
+                }
+
+                UpdateUI();
+                return;
+            }
+        }
     }
-
 
     public bool HasItems (ItemData item, int quantity)
     {
+        int amount = 0;
+
+        for(int i = 0; i < slots.Length; i++)
+        {
+            if(slots[i].item == item)
+                amount += slots[i].quantity;
+
+            if(amount >= quantity)
+                return true;
+        }
+
         return false;
     }
 }

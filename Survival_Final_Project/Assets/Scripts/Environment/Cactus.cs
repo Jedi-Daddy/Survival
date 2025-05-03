@@ -16,7 +16,6 @@ public class Cactus : MonoBehaviour
 
     IEnumerator DealDamage ()
     {
-        
         while(true)
         {
             for(int i = 0; i < thingsToDamage.Count; i++)
@@ -28,20 +27,16 @@ public class Cactus : MonoBehaviour
         }
     }
 
-
     private void OnCollisionEnter (Collision collision)
     {
-        
         if(collision.gameObject.GetComponent<IDamagable>() != null)
         {
             thingsToDamage.Add(collision.gameObject.GetComponent<IDamagable>());
         }
     }
 
-    
     private void OnCollisionExit (Collision collision)
     {
-        
         if(collision.gameObject.GetComponent<IDamagable>() != null)
         {
             thingsToDamage.Remove(collision.gameObject.GetComponent<IDamagable>());

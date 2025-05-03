@@ -23,122 +23,112 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool canLook = true;
 
-  
     private Rigidbody rig;
 
-    void Awake ()
+    private bool jumpRequest;
+
+    public static PlayerController instance;
+
+    void Awake()
     {
-     
         rig = GetComponent<Rigidbody>();
+        instance = this;
     }
 
-    void Start ()
+    void Start()
     {
-        
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
         Move();
+
+        if (jumpRequest)
+        {
+            rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumpRequest = false;
+        }
     }
 
-    void LateUpdate ()
+    void LateUpdate()
     {
-        if(canLook == true)
+        if (canLook)
             CameraLook();
     }
 
-    void Move ()
+    void Move()
     {
-      
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir *= moveSpeed;
         dir.y = rig.velocity.y;
 
-       
         rig.velocity = dir;
     }
 
-    void CameraLook ()
+    void CameraLook()
     {
-        
         camCurXRot += mouseDelta.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
-        
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 
-    
-    public void OnLookInput (InputAction.CallbackContext context)
+    public void OnLookInput(InputAction.CallbackContext context)
     {
         mouseDelta = context.ReadValue<Vector2>();
     }
 
-    
-    public void OnMoveInput (InputAction.CallbackContext context)
+    public void OnMoveInput(InputAction.CallbackContext context)
     {
-        
-        if(context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
         }
-        
-        else if(context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled)
         {
             curMovementInput = Vector2.zero;
         }
     }
 
-   
-    public void OnJumpInput (InputAction.CallbackContext context)
+    public void OnJumpInput(InputAction.CallbackContext context)
     {
-        
-        if(context.phase == InputActionPhase.Started)
+        if (context.phase == InputActionPhase.Started && IsGrounded())
         {
-            
-            if(IsGrounded())
-            {
-                
-                rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            }
+            jumpRequest = true;
         }
-    }    
+    }
 
-    bool IsGrounded ()
+    bool IsGrounded()
     {
         Ray[] rays = new Ray[4]
         {
-            new Ray(transform.position + (transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.2f) + (Vector3.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (-transform.right * 0.2f) + (Vector3.up * 0.01f), Vector3.down)
+            new Ray(transform.position + (transform.forward * 0.2f) + Vector3.up * 0.01f, Vector3.down),
+            new Ray(transform.position + (-transform.forward * 0.2f) + Vector3.up * 0.01f, Vector3.down),
+            new Ray(transform.position + (transform.right * 0.2f) + Vector3.up * 0.01f, Vector3.down),
+            new Ray(transform.position + (-transform.right * 0.2f) + Vector3.up * 0.01f, Vector3.down)
         };
 
-        for(int i = 0; i < rays.Length; i++)
+        foreach (Ray ray in rays)
         {
-            if(Physics.Raycast(rays[i], 0.1f, groundLayerMask))
-            {
+            if (Physics.Raycast(ray.origin, ray.direction, 0.2f, groundLayerMask))
                 return true;
-            }
         }
 
         return false;
     }
 
-    private void OnDrawGizmos ()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-
         Gizmos.DrawRay(transform.position + (transform.forward * 0.2f), Vector3.down);
         Gizmos.DrawRay(transform.position + (-transform.forward * 0.2f), Vector3.down);
         Gizmos.DrawRay(transform.position + (transform.right * 0.2f), Vector3.down);
         Gizmos.DrawRay(transform.position + (-transform.right * 0.2f), Vector3.down);
     }
 
-    public void ToggleCursor (bool toggle)
+    public void ToggleCursor(bool toggle)
     {
         Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
         canLook = !toggle;
