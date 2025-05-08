@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
 
     void Start ()
     {
-        continueButton.interactable = PlayerPrefs.HasKey("Save");
+        //continueButton.interactable = PlayerPrefs.HasKey("Save");
     }
 
     public void OnContinueButton ()
@@ -20,7 +20,7 @@ public class Menu : MonoBehaviour
 
     public void OnNewGameButton ()
     {
-        PlayerPrefs.DeleteKey("Save");
+        //PlayerPrefs.DeleteKey("Save");
         SceneManager.LoadScene("Game");
     }
 

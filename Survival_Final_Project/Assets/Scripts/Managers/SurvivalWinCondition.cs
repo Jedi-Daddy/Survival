@@ -5,23 +5,23 @@ using UnityEngine.SceneManagement;
 public class SurvivalWinCondition : MonoBehaviour
 {
     [Header("Survival Settings")]
-    public int daysToSurvive = 3;          // Количество дней, которые нужно выжить
-    public float dayDuration = 60f;        // Длительность одного дня в секундах
-    public Text dayCounterText;            // Текстовый объект для отображения дней
-    public GameObject winCanvas;           // Канвас победы
-    public GameObject loseCanvas;          // Канвас поражения
+    public int daysToSurvive = 3;          
+    public float dayDuration = 400f;        
+    public Text dayCounterText;            
+    public GameObject winCanvas;           
+    public GameObject loseCanvas;         
 
-    private int currentDay = 1;            // Текущий день
-    private float dayTimer;                // Таймер для отсчёта времени
-    private bool gameOver = false;         // Флаг завершения игры
+    private int currentDay = 0;            
+    private float dayTimer;                
+    private bool gameOver = false;         
 
     void Start()
     {
-        currentDay = 1;
+        currentDay = 0;
         dayTimer = 0f;
         gameOver = false;
 
-        UpdateDayCounter();  // Обновляем счётчик сразу при запуске
+        UpdateDayCounter();  
 
         if (winCanvas != null) winCanvas.SetActive(false);
         if (loseCanvas != null) loseCanvas.SetActive(false);
@@ -32,7 +32,7 @@ public class SurvivalWinCondition : MonoBehaviour
     {
         if (gameOver) return;
 
-        // Отсчитываем время до следующего дня
+        
         dayTimer += Time.deltaTime;
 
         if (dayTimer >= dayDuration)
@@ -41,7 +41,7 @@ public class SurvivalWinCondition : MonoBehaviour
             currentDay++;
             UpdateDayCounter();
 
-            // Проверяем условие победы
+            
             if (currentDay > daysToSurvive)
             {
                 WinGame();
@@ -49,7 +49,7 @@ public class SurvivalWinCondition : MonoBehaviour
         }
     }
 
-    // Обновляем текстовый счётчик на канвасе
+    
     void UpdateDayCounter()
     {
         if (dayCounterText != null)
@@ -97,21 +97,22 @@ public class SurvivalWinCondition : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    // Перезапуск игры
+
     public void RestartGame()
     {
         Time.timeScale = 1f;
+        gameOver = false;  
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // Выход в главное меню
+
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 
-    // Завершение игры
+    
     public void QuitGame()
     {
         Application.Quit();

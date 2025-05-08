@@ -57,13 +57,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b66db745774610248aceae30485fd7a6, type: 2}
   aiType: 2
   aiState: 0
-  detectDistance: 5
-  safeDistance: 8
+  detectDistance: 10
+  safeDistance: 13
   minWanderDistance: 2
   maxWanderDistance: 4
   minWanderWaitTime: 1
   maxWanderWaitTime: 2
-  damage: 5
+  damage: 10
   attackRate: 1.5
   attackDistance: 2
   agent: {fileID: 0}

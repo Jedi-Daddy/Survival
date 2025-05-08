@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        instance = this;
+        Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
