@@ -23,6 +23,7 @@ public class NPC : MonoBehaviour, IDamagable
     public NPCData data;
 
     [Header("Stats")]
+    public int maxHealth = 100;
     public int health;
     public float walkSpeed;
     public float runSpeed;
@@ -53,20 +54,30 @@ public class NPC : MonoBehaviour, IDamagable
     private Animator anim;
     private SkinnedMeshRenderer[] meshRenderers;
 
+    private OrcHPBar orcHPBar;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        if (PlayerController.instance == null)
+        orcHPBar = GetComponentInChildren<OrcHPBar>();
+        if (orcHPBar == null)
         {
-            Debug.LogError("PlayerController instance not found during NPC initialization.");
+            Debug.LogError("OrcHPBar not found in NPC prefab.");
+        }
+        else
+        {
+            orcHPBar.target = transform;
+            Debug.Log("HP Bar successfully linked to NPC.");
         }
     }
 
-    void Start ()
+
+    void Start()
     {
+        health = maxHealth;  
         SetState(AIState.Wandering);
     }
 
@@ -246,18 +257,28 @@ public class NPC : MonoBehaviour, IDamagable
     {
         health -= damageAmount;
 
-        if(health <= 0)
+        if (orcHPBar != null)
+        {
+            orcHPBar.UpdateHealth(health, maxHealth);
+        }
+
+        if (health <= 0)
             Die();
 
         StartCoroutine(DamageFlash());
 
-        if(aiType == AIType.Passive)
+        if (aiType == AIType.Passive)
             SetState(AIState.Fleeing);
     }
 
-    void Die ()
+    void Die()
     {
-        for(int x = 0; x < dropOnDeath.Length; x++)
+        if (orcHPBar != null)
+        {
+            Destroy(orcHPBar.gameObject);
+        }
+
+        for (int x = 0; x < dropOnDeath.Length; x++)
         {
             Instantiate(dropOnDeath[x].dropPrefab, transform.position, Quaternion.identity);
         }
