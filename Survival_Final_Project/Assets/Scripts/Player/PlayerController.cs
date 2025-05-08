@@ -24,15 +24,25 @@ public class PlayerController : MonoBehaviour
     public bool canLook = true;
 
     private Rigidbody rig;
-
     private bool jumpRequest;
 
     public static PlayerController instance;
+
+    [Header("Health")]
+    public int maxHealth = 100;
+    private int currentHealth;
+    private SurvivalWinCondition survivalManager;
 
     void Awake()
     {
         rig = GetComponent<Rigidbody>();
         instance = this;
+        currentHealth = maxHealth;
+        survivalManager = FindObjectOfType<SurvivalWinCondition>();
+        if (survivalManager == null)
+        {
+            Debug.LogError("SurvivalWinCondition not found on the scene!");
+        }
     }
 
     void Start()
@@ -97,6 +107,31 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {
             jumpRequest = true;
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"Player took {damage} damage. Current health: {currentHealth}");
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Debug.Log("Player is dead");
+        if (survivalManager != null)
+        {
+            survivalManager.LoseGame();
+            Debug.Log("LoseGame() called successfully.");
+        }
+        else
+        {
+            Debug.LogError("SurvivalWinCondition not set or not found.");
         }
     }
 
