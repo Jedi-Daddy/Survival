@@ -17,10 +17,17 @@ public class PlayerNeeds : MonoBehaviour, IDamagable
     public UnityEvent onTakeDamage;
 
     public static PlayerNeeds instance;
+    private SurvivalWinCondition survivalManager;
 
     void Awake ()
     {
         instance = this;
+        survivalManager = FindObjectOfType<SurvivalWinCondition>();
+
+        if (survivalManager == null)
+        {
+            Debug.LogError("SurvivalWinCondition not found on the scene!");
+        }
     }
 
     void Start ()
@@ -77,11 +84,21 @@ public class PlayerNeeds : MonoBehaviour, IDamagable
     {
         health.Subtract(amount);
         onTakeDamage?.Invoke();
+        Debug.Log($"Player took {amount} damage. Current health: {health.curValue}");
+
+        if (health.curValue <= 0.0f)
+        {
+            Die();
+        }
     }
 
     public void Die ()
     {
         Debug.Log("Player is dead");
+        if (survivalManager != null)
+        {
+            survivalManager.PlayerDied();
+        }
     }
 }
 

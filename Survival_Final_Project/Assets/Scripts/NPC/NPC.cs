@@ -53,12 +53,16 @@ public class NPC : MonoBehaviour, IDamagable
     private Animator anim;
     private SkinnedMeshRenderer[] meshRenderers;
 
-    void Awake ()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        if (PlayerController.instance == null)
+        {
+            Debug.LogError("PlayerController instance not found during NPC initialization.");
+        }
     }
 
     void Start ()
@@ -100,22 +104,41 @@ public class NPC : MonoBehaviour, IDamagable
         }
     }
 
-    void AttackingUpdate ()
+    void AttackingUpdate()
     {
-        if(playerDistance > attackDistance)
+        if (playerDistance > attackDistance)
         {
             agent.isStopped = false;
-            agent.SetDestination(PlayerController.instance.transform.position);
+            if (PlayerController.instance != null)
+            {
+                agent.SetDestination(PlayerController.instance.transform.position);
+            }
         }
         else
         {
             agent.isStopped = true;
 
-            if(Time.time - lastAttackTime > attackRate)
+            if (PlayerController.instance != null)
             {
-                lastAttackTime = Time.time;
-                PlayerController.instance.GetComponent<IDamagable>().TakePhysicalDamage(damage);
-                anim.SetTrigger("Attack");
+                IDamagable player = PlayerController.instance.GetComponent<IDamagable>();
+                if (player != null)
+                {
+                    if (Time.time - lastAttackTime > attackRate)
+                    {
+                        lastAttackTime = Time.time;
+                        player.TakePhysicalDamage(damage);
+                        anim.SetTrigger("Attack");
+                        Debug.Log("Player attacked by NPC: " + damage + " damage.");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Player does not implement IDamagable.");
+                }
+            }
+            else
+            {
+                Debug.LogError("PlayerController instance is null.");
             }
         }
     }

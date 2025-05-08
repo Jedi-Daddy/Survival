@@ -33,18 +33,17 @@ public class PlayerController : MonoBehaviour
     private int currentHealth;
     private SurvivalWinCondition survivalManager;
 
-    public GameObject loseCanvas;
-    private bool gameOver = false;
-
     void Awake()
     {
         rig = GetComponent<Rigidbody>();
-        instance = this;
-        currentHealth = maxHealth;
-        survivalManager = FindObjectOfType<SurvivalWinCondition>();
-        if (survivalManager == null)
+        if (instance == null)
         {
-            Debug.LogError("SurvivalWinCondition not found on the scene!");
+            instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("Multiple PlayerController instances detected. Destroying extra instance.");
+            Destroy(gameObject);
         }
     }
 
@@ -56,7 +55,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Move();
-
         if (jumpRequest)
         {
             rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -75,7 +73,6 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir *= moveSpeed;
         dir.y = rig.velocity.y;
-
         rig.velocity = dir;
     }
 
@@ -130,7 +127,6 @@ public class PlayerController : MonoBehaviour
 
     void PlayerDie()
     {
-        LoseGame();
         Debug.Log("Player is dead");
         if (survivalManager != null)
         {
@@ -143,23 +139,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void LoseGame()
-    {
-        gameOver = true;
-        if (loseCanvas != null)
-        {
-            loseCanvas.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Debug.Log("Game Over! You couldn't survive on the island.");
-        }
-        else
-        {
-            Debug.LogError("Lose canvas not assigned!");
-        }
-        
-        Time.timeScale = 0f;
-    }
+    
 
     bool IsGrounded()
     {

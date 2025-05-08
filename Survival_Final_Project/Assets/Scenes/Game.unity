@@ -1075,7 +1075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3300dfc45beda904c831876bd12fd545, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  daysToSurvive: 2
+  daysToSurvive: 3
   dayDuration: 10
   dayCounterText: {fileID: 1799541589}
   winCanvas: {fileID: 1407430220}
@@ -16470,7 +16470,6 @@ MonoBehaviour:
   lookSensitivity: 0.2
   canLook: 1
   maxHealth: 100
-  loseCanvas: {fileID: 1068019285}
 --- !u!114 &1226641021
 MonoBehaviour:
   m_ObjectHideFlags: 0
