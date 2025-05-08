@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     private int currentHealth;
     private SurvivalWinCondition survivalManager;
 
+    public GameObject loseCanvas;
+    private bool gameOver = false;
+
     void Awake()
     {
         rig = GetComponent<Rigidbody>();
@@ -113,16 +116,21 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        Debug.Log($"Player took {damage} damage. Current health: {currentHealth}");
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            Die();
+            Debug.Log($"Player took {damage} damage. Current health: {currentHealth}");
+            PlayerDie();
+        }
+        else
+        {
+            Debug.Log($"Player took {damage} damage. Current health: {currentHealth}");
         }
     }
 
-    void Die()
+    void PlayerDie()
     {
+        LoseGame();
         Debug.Log("Player is dead");
         if (survivalManager != null)
         {
@@ -133,6 +141,24 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("SurvivalWinCondition not set or not found.");
         }
+    }
+
+    public void LoseGame()
+    {
+        gameOver = true;
+        if (loseCanvas != null)
+        {
+            loseCanvas.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("Game Over! You couldn't survive on the island.");
+        }
+        else
+        {
+            Debug.LogError("Lose canvas not assigned!");
+        }
+        
+        Time.timeScale = 0f;
     }
 
     bool IsGrounded()
