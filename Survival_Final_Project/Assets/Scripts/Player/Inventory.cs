@@ -44,12 +44,12 @@ public class Inventory : MonoBehaviour
         needs = GetComponent<PlayerNeeds>();
     }
 
-    void Start ()
+    void Start()
     {
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[uiSlots.Length];
 
-        for(int x = 0; x < slots.Length; x++)
+        for (int x = 0; x < slots.Length; x++)
         {
             slots[x] = new ItemSlot();
             uiSlots[x].index = x;
@@ -57,6 +57,7 @@ public class Inventory : MonoBehaviour
         }
 
         ClearSelectedItemWindow();
+        CursorManager.LockCursor();  
     }
 
     public void OnInventoryButton (InputAction.CallbackContext context)
@@ -67,21 +68,21 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void Toggle ()
+    public void Toggle()
     {
-        if(inventoryWindow.activeInHierarchy)
+        if (inventoryWindow.activeInHierarchy)
         {
             inventoryWindow.SetActive(false);
             onCloseInventory.Invoke();
-            controller.ToggleCursor(false);
+            CursorManager.LockCursor();  
         }
         else
         {
             inventoryWindow.SetActive(true);
             onOpenInventory.Invoke();
             ClearSelectedItemWindow();
-            controller.ToggleCursor(true);
-        }    
+            CursorManager.UnlockCursor();  
+        }
     }
 
     public bool IsOpen ()
