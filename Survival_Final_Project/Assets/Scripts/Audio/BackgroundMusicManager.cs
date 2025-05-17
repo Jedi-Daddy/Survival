@@ -1,144 +1,44 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BackgroundMusicManager : MonoBehaviour
 {
-    [Serializable]
-    public class MusicTrack
-    {
-        public string Name;
-        public AudioClip Clip;
-    }
-
-    public static BackgroundMusicManager Instance;
-
-    public AudioSource Source;
-    public MusicTrack[] Tracks;
+    private static BackgroundMusicManager instance;
+    private AudioSource audioSource;
 
     void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("BackgroundMusicManager initialized.");
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
 
-        // Проверяем наличие компонента AudioSource
-        if (Source == null)
-        {
-            Source = GetComponent<AudioSource>();
-            if (Source == null)
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
             {
                 Debug.LogError("AudioSource component not found on BackgroundMusicManager!");
                 return;
             }
-        }
 
-        Source.loop = true;
-        Source.playOnAwake = false;  // Отключаем автозапуск
-    }
+            if (audioSource.clip == null)
+            {
+                Debug.LogError("No audio clip assigned to AudioSource!");
+                return;
+            }
 
-    void Start()
-    {
-        // Попробуем запустить первый трек при старте
-        if (Tracks.Length > 0)
-        {
-            Play(Tracks[0].Name);  // ✅ Запуск первого трека из списка
-        }
-        else
-        {
-            Debug.LogError("No tracks available in BackgroundMusicManager.");
-        }
-    }
+            // Проверка громкости
+            if (audioSource.volume == 0)
+            {
+                Debug.LogWarning("Volume is set to 0!");
+                audioSource.volume = 1.0f;
+            }
 
-    public void Play(string name)
-    {
-        var track = Tracks.FirstOrDefault(x => x.Name.Equals(name));
-        if (track == null)
-        {
-            Debug.LogError("Music track with name " + name + " not found");
-            return;
-        }
-
-        if (Source.clip == track.Clip && Source.isPlaying)
-        {
-            Debug.Log("Music track " + name + " is already playing.");
-            return;
-        }
-
-        Source.clip = track.Clip;
-        if (Source.clip == null)
-        {
-            Debug.LogError("Assigned clip is null.");
-            return;
-        }
-
-        Source.Play();
-        if (Source.isPlaying)
-        {
-            Debug.Log("Music is now playing: " + name);
+            audioSource.loop = true;
+            audioSource.Play();
+            Debug.Log("Playing background music: " + audioSource.clip.name);
         }
         else
         {
-            Debug.LogError("Music failed to start playing: " + name);
+            Destroy(gameObject);
         }
-    }
-
-    public void Stop()
-    {
-        if (Source.isPlaying)
-        {
-            Source.Stop();
-            Debug.Log("Background music stopped.");
-        }
-    }
-
-    public void Pause()
-    {
-        if (Source.isPlaying)
-        {
-            Source.Pause();
-            Debug.Log("Background music paused.");
-        }
-    }
-
-    public void Resume()
-    {
-        if (!Source.isPlaying && Source.clip != null)
-        {
-            Source.Play();
-            Debug.Log("Background music resumed.");
-        }
-    }
-
-    public void SetVolume(float volume)
-    {
-        Source.volume = Mathf.Clamp01(volume);
-        Debug.Log("Music volume set to: " + volume);
-    }
-
-    public void ToggleMute()
-    {
-        Source.mute = !Source.mute;
-        Debug.Log("Music mute: " + Source.mute);
-    }
-
-    public void NextTrack()
-    {
-        if (Tracks.Length == 0) return;
-
-        int currentIndex = Array.FindIndex(Tracks, t => t.Clip == Source.clip);
-        int nextIndex = (currentIndex + 1) % Tracks.Length;
-
-        Play(Tracks[nextIndex].Name);
     }
 }
